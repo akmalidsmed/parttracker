@@ -57,6 +57,25 @@ html_code = """
       transform: translateY(-5px);
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
+
+    details {
+      margin-bottom: 1rem;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: white;
+      margin-bottom: .5rem;
+    }
+
+    select {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: none;
+      margin-right: 10px;
+      color: #111;
+    }
   </style>
 </head>
 <body>
@@ -94,6 +113,17 @@ html_code = """
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-white">Data Mesin</h2>
       </div>
+      <details>
+        <summary>Filter Mesin</summary>
+        <select>
+          <option>Semua Nama Mesin</option>
+          <option>Picoplus</option>
+        </select>
+        <select>
+          <option>Semua Serial Number</option>
+          <option>PC424M017</option>
+        </select>
+      </details>
       <div class="overflow-x-auto">
         <table class="w-full text-white">
           <thead class="bg-white/10">
@@ -125,6 +155,17 @@ html_code = """
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-white">Data Part Dicopot</h2>
       </div>
+      <details>
+        <summary>Filter Part</summary>
+        <select>
+          <option>Semua Mesin</option>
+          <option>Picoplus</option>
+        </select>
+        <select>
+          <option>Semua SN</option>
+          <option>PC424M017</option>
+        </select>
+      </details>
       <div class="overflow-x-auto">
         <table class="w-full text-white">
           <thead class="bg-white/10">
@@ -183,4 +224,4 @@ html_code = """
 </html>
 """
 
-st.components.v1.html(html_code, height=2000, scrolling=True)
+st.components.v1.html(html_code, height=2200, scrolling=True)
