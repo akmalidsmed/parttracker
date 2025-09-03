@@ -100,11 +100,11 @@ html_code = """
       </div>
       <div class="card-hover bg-gradient-to-br from-yellow-500 to-yellow-600 p-6 rounded-xl text-white">
         <div class="text-2xl font-bold mb-2" id="stat-monitor">2</div>
-        <div class="text-sm">Part Monitor (&lt; 1 bulan)</div>
+        <div class="text-sm">Part Monitor (< 1 bulan)</div>
       </div>
       <div class="card-hover bg-gradient-to-br from-red-500 to-red-600 p-6 rounded-xl text-white">
         <div class="text-2xl font-bold mb-2" id="stat-warning">1</div>
-        <div class="text-sm">Part Perhatian (&gt;= 1 bulan)</div>
+        <div class="text-sm">Part Perhatian (>= 1 bulan)</div>
       </div>
     </div>
 
@@ -188,7 +188,7 @@ html_code = """
               <td class="px-4 py-3">Picoplus</td>
               <td class="px-4 py-3">PC424M017</td>
               <td class="px-4 py-3">31 Juli 2025</td>
-              <td class="px-4 py-3">34 hari</td>
+              <td class="px-4 py-3">35 hari</td>
               <td class="px-4 py-3">Untuk Tosca Clinic Menteng</td>
               <td class="px-4 py-3">Menunggu part pengganti</td>
               <td class="px-4 py-3">Dikirim 1 Agustus 2025</td>
@@ -199,7 +199,7 @@ html_code = """
               <td class="px-4 py-3">Picoplus</td>
               <td class="px-4 py-3">PC424M017</td>
               <td class="px-4 py-3">6 Agustus 2025</td>
-              <td class="px-4 py-3">28 hari</td>
+              <td class="px-4 py-3">29 hari</td>
               <td class="px-4 py-3">Untuk Tosca Clinic Menteng</td>
               <td class="px-4 py-3">Menunggu part pengganti</td>
               <td class="px-4 py-3">Dikirim 6 Agustus 2025</td>
@@ -210,7 +210,7 @@ html_code = """
               <td class="px-4 py-3">Picoplus</td>
               <td class="px-4 py-3">PC424M017</td>
               <td class="px-4 py-3">2 September 2025</td>
-              <td class="px-4 py-3">1 hari</td>
+              <td class="px-4 py-3">2 hari</td>
               <td class="px-4 py-3">Untuk Votre Menteng</td>
               <td class="px-4 py-3">Menunggu part pengganti</td>
               <td class="px-4 py-3">Dikirim 2 September 2025, dicopot oleh rizki di logos</td>
