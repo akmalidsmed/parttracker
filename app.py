@@ -14,6 +14,9 @@ html_code = """
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
   />
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"/>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
     :root {
       --primary: #3b82f6;
@@ -115,17 +118,10 @@ html_code = """
       </div>
       <details>
         <summary>Filter Mesin</summary>
-        <select>
-          <option>Semua Nama Mesin</option>
-          <option>Picoplus</option>
-        </select>
-        <select>
-          <option>Semua Serial Number</option>
-          <option>PC424M017</option>
-        </select>
+        <input type="text" id="search-mesin" placeholder="Search...">
       </details>
       <div class="overflow-x-auto">
-        <table class="w-full text-white">
+        <table class="w-full text-white" id="mesinTable">
           <thead class="bg-white/10">
             <tr>
               <th class="px-4 py-3 text-left">Nama Mesin</th>
@@ -136,7 +132,7 @@ html_code = """
               <th class="px-4 py-3 text-left">Note</th>
             </tr>
           </thead>
-          <tbody id="mesin-table-body">
+          <tbody>
             <tr class="border-b border-white/10 hover:bg-white/5">
               <td class="px-4 py-3">Picoplus</td>
               <td class="px-4 py-3">PC424M017</td>
@@ -157,27 +153,10 @@ html_code = """
       </div>
       <details>
         <summary>Filter Part</summary>
-        <select>
-          <option>Semua Part Number</option>
-          <option>-</option>
-        </select>
-        <select>
-          <option>Semua Nama Part</option>
-          <option>DYE ROD Picoplus</option>
-          <option>Simmer Board</option>
-          <option>Temperature Sensor</option>
-        </select>
-        <select>
-          <option>Semua Mesin</option>
-          <option>Picoplus</option>
-        </select>
-        <select>
-          <option>Semua SN</option>
-          <option>PC424M017</option>
-        </select>
+        <input type="text" id="search-part" placeholder="Search...">
       </details>
       <div class="overflow-x-auto">
-        <table class="w-full text-white">
+        <table class="w-full text-white" id="partTable">
           <thead class="bg-white/10">
             <tr>
               <th class="px-4 py-3 text-left">Part Number</th>
@@ -191,7 +170,7 @@ html_code = """
               <th class="px-4 py-3 text-left">Note</th>
             </tr>
           </thead>
-          <tbody id="part-table-body">
+          <tbody>
             <tr class="border-b border-white/10 hover:bg-white/5">
               <td class="px-4 py-3">-</td>
               <td class="px-4 py-3">DYE ROD Picoplus</td>
@@ -230,6 +209,21 @@ html_code = """
       </div>
     </div>
   </div>
+
+  <script>
+    $(document).ready(function() {
+      $('#mesinTable').DataTable();
+      $('#partTable').DataTable();
+
+      $('#search-mesin').on('keyup', function() {
+        $('#mesinTable').DataTable().search(this.value).draw();
+      });
+
+      $('#search-part').on('keyup', function() {
+        $('#partTable').DataTable().search(this.value).draw();
+      });
+    });
+  </script>
 </body>
 </html>
 """
