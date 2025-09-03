@@ -133,12 +133,6 @@ html_code = """
     <div class="glass-effect p-6 mb-8">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-white">Data Mesin</h2>
-        <button
-          id="add-mesin-btn"
-          class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors"
-        >
-          <i class="fas fa-plus mr-2"></i>Tambah Mesin
-        </button>
       </div>
 
       <div class="overflow-x-auto">
@@ -168,12 +162,6 @@ html_code = """
     <div class="glass-effect p-6 mb-8">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-white">Data Part Dicopot</h2>
-        <button
-          id="add-part-btn"
-          class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors"
-        >
-          <i class="fas fa-plus mr-2"></i>Tambah Part
-        </button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
@@ -242,8 +230,6 @@ html_code = """
     // Table bodies
     const mesinTableBody = document.getElementById("mesin-table-body");
     const partTableBody = document.getElementById("part-table-body");
-    const filterMesinSelect = document.getElementById("filter-mesin");
-    const filterSnSelect = document.getElementById("filter-sn");
 
     // Initialize page
     function init() {
@@ -290,10 +276,10 @@ html_code = """
         const tr = document.createElement("tr");
         tr.className = "border-b border-white/10 hover:bg-white/5";
         tr.innerHTML = `
-          <td class="px-4 py-3">${mesin.nama}</td>
-          <td class="px-4 py-3">${mesin.sn}</td>
-          <td class="px-4 py-3">${new Date(mesin.tanggalInput).toLocaleDateString("id-ID")}</td>
-          <td class="px-4 py-3">${partCount}</td>
+          <td class="px-4 py-3">${{mesin.nama}}</td>
+          <td class="px-4 py-3">${{mesin.sn}}</td>
+          <td class="px-4 py-3">${{new Date(mesin.tanggalInput).toLocaleDateString("id-ID")}}</td>
+          <td class="px-4 py-3">${{partCount}}</td>
           <td class="px-4 py-3">
             <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
               <i class="fas fa-edit"></i>
@@ -323,18 +309,18 @@ html_code = """
         const tr = document.createElement("tr");
         tr.className = "border-b border-white/10 hover:bg-white/5";
         tr.innerHTML = `
-          <td class="px-4 py-3">${part.partNumber || "-"}</td>
-          <td class="px-4 py-3">${part.nama}</td>
-          <td class="px-4 py-3">${mesin ? mesin.nama : "-"}</td>
-          <td class="px-4 py-3">${mesin ? mesin.sn : "-"}</td>
-          <td class="px-4 py-3">${new Date(part.tanggalPencopotan).toLocaleDateString("id-ID")}</td>
-          <td class="px-4 py-3">${part.tujuan || "-"}</td>
+          <td class="px-4 py-3">${{part.partNumber || "-"}}</td>
+          <td class="px-4 py-3">${{part.nama}}</td>
+          <td class="px-4 py-3">${{mesin ? mesin.nama : "-"}}</td>
+          <td class="px-4 py-3">${{mesin ? mesin.sn : "-"}}</td>
+          <td class="px-4 py-3">${{new Date(part.tanggalPencopotan).toLocaleDateString("id-ID")}}</td>
+          <td class="px-4 py-3">${{part.tujuan || "-"}}</td>
           <td class="px-4 py-3">
             <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
               <i class="fas fa-eye"></i>
             </button>
           </td>
-          <td class="px-4 py-3">${part.note || ""}</td>
+          <td class="px-4 py-3">${{part.note || ""}}</td>
         `;
         partTableBody.appendChild(tr);
       });
