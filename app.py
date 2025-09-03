@@ -14,9 +14,6 @@ html_code = """
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
   />
-  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"/>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
     :root {
       --primary: #3b82f6;
@@ -72,7 +69,7 @@ html_code = """
       margin-bottom: .5rem;
     }
 
-    select {
+    select, input[type="text"] {
       padding: 6px 10px;
       border-radius: 6px;
       border: none;
@@ -118,7 +115,14 @@ html_code = """
       </div>
       <details>
         <summary>Filter Mesin</summary>
-        <input type="text" id="search-mesin" placeholder="Search...">
+        <select id="filter-mesin-nama">
+          <option value="">Semua Nama Mesin</option>
+          <option value="Picoplus">Picoplus</option>
+        </select>
+        <select id="filter-mesin-sn">
+          <option value="">Semua Serial Number</option>
+          <option value="PC424M017">PC424M017</option>
+        </select>
       </details>
       <div class="overflow-x-auto">
         <table class="w-full text-white" id="mesinTable">
@@ -153,7 +157,24 @@ html_code = """
       </div>
       <details>
         <summary>Filter Part</summary>
-        <input type="text" id="search-part" placeholder="Search...">
+        <select id="filter-part-number">
+          <option value="">Semua Part Number</option>
+          <option value="-">-</option>
+        </select>
+        <select id="filter-part-nama">
+          <option value="">Semua Nama Part</option>
+          <option value="DYE ROD Picoplus">DYE ROD Picoplus</option>
+          <option value="Simmer Board">Simmer Board</option>
+          <option value="Temperature Sensor">Temperature Sensor</option>
+        </select>
+        <select id="filter-part-mesin">
+          <option value="">Semua Mesin</option>
+          <option value="Picoplus">Picoplus</option>
+        </select>
+        <select id="filter-part-sn">
+          <option value="">Semua SN</option>
+          <option value="PC424M017">PC424M017</option>
+        </select>
       </details>
       <div class="overflow-x-auto">
         <table class="w-full text-white" id="partTable">
@@ -211,17 +232,65 @@ html_code = """
   </div>
 
   <script>
-    $(document).ready(function() {
-      $('#mesinTable').DataTable();
-      $('#partTable').DataTable();
+    function filterTable(tableId, filters) {
+      const table = document.getElementById(tableId);
+      const trs = table.getElementsByTagName('tr');
+      for (let i = 1; i < trs.length; i++) {
+        let show = true;
+        const tds = trs[i].getElementsByTagName('td');
+        filters.forEach((filter, index) => {
+          if (filter.value && !tds[index].innerText.includes(filter.value)) {
+            show = false;
+          }
+        });
+        trs[i].style.display = show ? '' : 'none';
+      }
+    }
 
-      $('#search-mesin').on('keyup', function() {
-        $('#mesinTable').DataTable().search(this.value).draw();
-      });
+    document.getElementById('filter-mesin-nama').addEventListener('change', () => {
+      filterTable('mesinTable', [
+        document.getElementById('filter-mesin-nama'),
+        document.getElementById('filter-mesin-sn')
+      ]);
+    });
+    document.getElementById('filter-mesin-sn').addEventListener('change', () => {
+      filterTable('mesinTable', [
+        document.getElementById('filter-mesin-nama'),
+        document.getElementById('filter-mesin-sn')
+      ]);
+    });
 
-      $('#search-part').on('keyup', function() {
-        $('#partTable').DataTable().search(this.value).draw();
-      });
+    document.getElementById('filter-part-number').addEventListener('change', () => {
+      filterTable('partTable', [
+        document.getElementById('filter-part-number'),
+        document.getElementById('filter-part-nama'),
+        document.getElementById('filter-part-mesin'),
+        document.getElementById('filter-part-sn')
+      ]);
+    });
+    document.getElementById('filter-part-nama').addEventListener('change', () => {
+      filterTable('partTable', [
+        document.getElementById('filter-part-number'),
+        document.getElementById('filter-part-nama'),
+        document.getElementById('filter-part-mesin'),
+        document.getElementById('filter-part-sn')
+      ]);
+    });
+    document.getElementById('filter-part-mesin').addEventListener('change', () => {
+      filterTable('partTable', [
+        document.getElementById('filter-part-number'),
+        document.getElementById('filter-part-nama'),
+        document.getElementById('filter-part-mesin'),
+        document.getElementById('filter-part-sn')
+      ]);
+    });
+    document.getElementById('filter-part-sn').addEventListener('change', () => {
+      filterTable('partTable', [
+        document.getElementById('filter-part-number'),
+        document.getElementById('filter-part-nama'),
+        document.getElementById('filter-part-mesin'),
+        document.getElementById('filter-part-sn')
+      ]);
     });
   </script>
 </body>
