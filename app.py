@@ -24,10 +24,16 @@ html_code = """
       --dark: #1f2937;
     }
 
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
     body {
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
+      min-width: 100vw;
       display: flex;
       flex-direction: column;
       margin: 0;
@@ -54,7 +60,7 @@ html_code = """
   </style>
 </head>
 <body>
-  <div class="max-w-7xl mx-auto">
+  <div class="w-full h-full">
     <!-- Header -->
     <div class="glass-effect p-6 mb-6 text-center">
       <h1 class="text-3xl font-bold text-white mb-2">
@@ -74,12 +80,12 @@ html_code = """
         <div class="text-sm">Total Part Dicopot</div>
       </div>
       <div class="card-hover bg-gradient-to-br from-yellow-500 to-yellow-600 p-6 rounded-xl text-white">
-        <div class="text-2xl font-bold mb-2" id="stat-monitor">0</div>
-        <div class="text-sm">Part Monitor</div>
+        <div class="text-2xl font-bold mb-2" id="stat-monitor">2</div>
+        <div class="text-sm">Part Monitor (&lt; 1 bulan)</div>
       </div>
       <div class="card-hover bg-gradient-to-br from-red-500 to-red-600 p-6 rounded-xl text-white">
-        <div class="text-2xl font-bold mb-2" id="stat-warning">0</div>
-        <div class="text-sm">Part Perhatian</div>
+        <div class="text-2xl font-bold mb-2" id="stat-warning">1</div>
+        <div class="text-sm">Part Perhatian (&gt;= 1 bulan)</div>
       </div>
     </div>
 
@@ -126,6 +132,7 @@ html_code = """
               <th class="px-4 py-3 text-left">Mesin</th>
               <th class="px-4 py-3 text-left">SN</th>
               <th class="px-4 py-3 text-left">Tanggal Dicopot</th>
+              <th class="px-4 py-3 text-left">Aging</th>
               <th class="px-4 py-3 text-left">Tujuan</th>
               <th class="px-4 py-3 text-left">Aksi</th>
               <th class="px-4 py-3 text-left">Note</th>
@@ -138,6 +145,7 @@ html_code = """
               <td class="px-4 py-3">Picoplus</td>
               <td class="px-4 py-3">PC424M017</td>
               <td class="px-4 py-3">31 Juli 2025</td>
+              <td class="px-4 py-3">1 bulan+</td>
               <td class="px-4 py-3">Untuk Tosca Clinic Menteng</td>
               <td class="px-4 py-3">Menunggu part pengganti</td>
               <td class="px-4 py-3">Dikirim 1 Agustus 2025</td>
@@ -148,6 +156,7 @@ html_code = """
               <td class="px-4 py-3">Picoplus</td>
               <td class="px-4 py-3">PC424M017</td>
               <td class="px-4 py-3">6 Agustus 2025</td>
+              <td class="px-4 py-3">&lt; 1 bulan</td>
               <td class="px-4 py-3">Untuk Tosca Clinic Menteng</td>
               <td class="px-4 py-3">Menunggu part pengganti</td>
               <td class="px-4 py-3">Dikirim 6 Agustus 2025</td>
@@ -158,9 +167,10 @@ html_code = """
               <td class="px-4 py-3">Picoplus</td>
               <td class="px-4 py-3">PC424M017</td>
               <td class="px-4 py-3">2 September 2025</td>
+              <td class="px-4 py-3">&lt; 1 bulan</td>
               <td class="px-4 py-3">Untuk Votre Menteng</td>
               <td class="px-4 py-3">Menunggu part pengganti</td>
-              <td class="px-4 py-3">Dikirim 2 September 2025, dicopot oleh rizki di logos dan dikirimkan ke Slipi up Rofi/Akbar</td>
+              <td class="px-4 py-3">Dikirim 2 September 2025, dicopot oleh rizki di logos</td>
             </tr>
           </tbody>
         </table>
@@ -171,4 +181,4 @@ html_code = """
 </html>
 """
 
-st.components.v1.html(html_code, height=1000, scrolling=True)
+st.components.v1.html(html_code, height=2000, scrolling=True)
