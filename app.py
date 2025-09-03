@@ -103,6 +103,7 @@ html_code = """
               <th class="px-4 py-3 text-left">Tanggal Input</th>
               <th class="px-4 py-3 text-left">Jumlah Part</th>
               <th class="px-4 py-3 text-left">Aksi</th>
+              <th class="px-4 py-3 text-left">Note</th>
             </tr>
           </thead>
           <tbody id="mesin-table-body">
@@ -112,6 +113,7 @@ html_code = """
               <td class="px-4 py-3">31 Juli 2025</td>
               <td class="px-4 py-3">3</td>
               <td class="px-4 py-3">Belum dilengkapi</td>
+              <td class="px-4 py-3">Mesin Stock</td>
             </tr>
           </tbody>
         </table>
@@ -132,7 +134,7 @@ html_code = """
               <th class="px-4 py-3 text-left">Mesin</th>
               <th class="px-4 py-3 text-left">SN</th>
               <th class="px-4 py-3 text-left">Tanggal Dicopot</th>
-              <th class="px-4 py-3 text-left">Aging</th>
+              <th class="px-4 py-3 text-left">Aging (hari)</th>
               <th class="px-4 py-3 text-left">Tujuan</th>
               <th class="px-4 py-3 text-left">Aksi</th>
               <th class="px-4 py-3 text-left">Note</th>
@@ -145,7 +147,7 @@ html_code = """
               <td class="px-4 py-3">Picoplus</td>
               <td class="px-4 py-3">PC424M017</td>
               <td class="px-4 py-3">31 Juli 2025</td>
-              <td class="px-4 py-3">1 bulan+</td>
+              <td class="px-4 py-3">34 hari</td>
               <td class="px-4 py-3">Untuk Tosca Clinic Menteng</td>
               <td class="px-4 py-3">Menunggu part pengganti</td>
               <td class="px-4 py-3">Dikirim 1 Agustus 2025</td>
@@ -156,7 +158,7 @@ html_code = """
               <td class="px-4 py-3">Picoplus</td>
               <td class="px-4 py-3">PC424M017</td>
               <td class="px-4 py-3">6 Agustus 2025</td>
-              <td class="px-4 py-3">&lt; 1 bulan</td>
+              <td class="px-4 py-3">28 hari</td>
               <td class="px-4 py-3">Untuk Tosca Clinic Menteng</td>
               <td class="px-4 py-3">Menunggu part pengganti</td>
               <td class="px-4 py-3">Dikirim 6 Agustus 2025</td>
@@ -167,7 +169,7 @@ html_code = """
               <td class="px-4 py-3">Picoplus</td>
               <td class="px-4 py-3">PC424M017</td>
               <td class="px-4 py-3">2 September 2025</td>
-              <td class="px-4 py-3">&lt; 1 bulan</td>
+              <td class="px-4 py-3">1 hari</td>
               <td class="px-4 py-3">Untuk Votre Menteng</td>
               <td class="px-4 py-3">Menunggu part pengganti</td>
               <td class="px-4 py-3">Dikirim 2 September 2025, dicopot oleh rizki di logos</td>
