@@ -86,69 +86,9 @@ html_code = """
         transform: translateY(0);
       }
     }
-
-    /* Login admin kecil di kanan atas */
-    #admin-login {
-      position: fixed;
-      top: 12px;
-      right: 12px;
-      background: rgba(255 255 255 / 0.15);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255 255 255 / 0.2);
-      border-radius: 12px;
-      padding: 8px 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      z-index: 1000;
-      color: white;
-      font-size: 14px;
-      width: 180px;
-    }
-
-    #admin-login input[type="password"] {
-      flex: 1;
-      padding: 4px 8px;
-      border-radius: 6px;
-      border: none;
-      outline: none;
-      font-size: 14px;
-      background: rgba(255 255 255 / 0.9);
-      color: #111;
-    }
-
-    #admin-login button {
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 6px;
-      padding: 5px 10px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 14px;
-      transition: background-color 0.3s ease;
-    }
-
-    #admin-login button:hover {
-      background: #2563eb;
-    }
   </style>
 </head>
 <body>
-  <!-- Admin Login kecil kanan atas -->
-  <div id="admin-login" title="Login Admin">
-    <input
-      type="password"
-      id="admin-password"
-      placeholder="PIN Admin"
-      autocomplete="off"
-      aria-label="PIN Admin"
-    />
-    <button id="login-btn" title="Login Admin">
-      <i class="fas fa-lock-open"></i>
-    </button>
-  </div>
-
   <div class="max-w-7xl mx-auto">
     <!-- Header -->
     <div class="glass-effect p-6 mb-6 text-center">
@@ -195,7 +135,7 @@ html_code = """
         <h2 class="text-2xl font-bold text-white">Data Mesin</h2>
         <button
           id="add-mesin-btn"
-          class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors hidden"
+          class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors"
         >
           <i class="fas fa-plus mr-2"></i>Tambah Mesin
         </button>
@@ -230,7 +170,7 @@ html_code = """
         <h2 class="text-2xl font-bold text-white">Data Part Dicopot</h2>
         <button
           id="add-part-btn"
-          class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors hidden"
+          class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors"
         >
           <i class="fas fa-plus mr-2"></i>Tambah Part
         </button>
@@ -292,14 +232,6 @@ html_code = """
     // Data arrays
     let mesinData = JSON.parse(localStorage.getItem("mesinData")) || [];
     let partData = JSON.parse(localStorage.getItem("partData")) || [];
-    let userRole = "viewer";
-    const adminPassword = "0101";
-
-    // DOM elements
-    const addMesinBtn = document.getElementById("add-mesin-btn");
-    const addPartBtn = document.getElementById("add-part-btn");
-    const loginBtn = document.getElementById("login-btn");
-    const adminPasswordInput = document.getElementById("admin-password");
 
     // Stats elements
     const statMesin = document.getElementById("stat-mesin");
@@ -318,9 +250,6 @@ html_code = """
       updateStats();
       renderMesinTable();
       renderPartTable();
-      populateFilterMesin();
-      populateFilterSn();
-      updateUIForRole();
     }
 
     // Update stats
@@ -328,7 +257,6 @@ html_code = """
       statMesin.textContent = mesinData.length;
       statPart.textContent = partData.length;
 
-      // Count monitor and warning parts
       const now = new Date();
       let monitorCount = 0;
       let warningCount = 0;
@@ -343,7 +271,7 @@ html_code = """
       statWarning.textContent = warningCount;
     }
 
-    // Render mesin table dengan dropdown status part
+    // Render mesin table
     function renderMesinTable() {
       mesinTableBody.innerHTML = "";
       if (mesinData.length === 0) {
@@ -357,74 +285,29 @@ html_code = """
         `;
         return;
       }
-      mesinData.forEach((mesin, index) => {
-        // Hitung jumlah part dicopot untuk mesin ini
-        const partsForMesin = partData.filter((p) => p.mesinId === mesin.id);
-        const partCount = partsForMesin.length;
-
-        // Ambil status part mesin jika sudah disimpan, default "Part belum dilengkapi"
-        const statusKey = `mesinStatus_${mesin.id}`;
-        const savedStatus = localStorage.getItem(statusKey) || "belum";
-
+      mesinData.forEach((mesin) => {
+        const partCount = partData.filter((p) => p.mesinId === mesin.id).length;
         const tr = document.createElement("tr");
         tr.className = "border-b border-white/10 hover:bg-white/5";
-
         tr.innerHTML = `
           <td class="px-4 py-3">${mesin.nama}</td>
           <td class="px-4 py-3">${mesin.sn}</td>
           <td class="px-4 py-3">${new Date(mesin.tanggalInput).toLocaleDateString("id-ID")}</td>
           <td class="px-4 py-3">${partCount}</td>
           <td class="px-4 py-3">
-            <select onchange="updateMesinStatus('${mesin.id}', this.value)" class="bg-gray-800 text-white rounded px-2 py-1 w-full">
-              <option value="belum" ${savedStatus === "belum" ? "selected" : ""}>Part belum dilengkapi</option>
-              <option value="sebagian" ${savedStatus === "sebagian" ? "selected" : ""}>Part dilengkapi sebagian</option>
-              <option value="sepenuhnya" ${savedStatus === "sepenuhnya" ? "selected" : ""}>Part dilengkapi sepenuhnya</option>
-            </select>
+            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
+              <i class="fas fa-edit"></i>
+            </button>
           </td>
         `;
         mesinTableBody.appendChild(tr);
       });
     }
 
-    // Fungsi simpan status part mesin ke localStorage
-    function updateMesinStatus(mesinId, status) {
-      localStorage.setItem(`mesinStatus_${mesinId}`, status);
-    }
-
-    // Render part table dengan kolom baru dan filter
+    // Render part table
     function renderPartTable() {
       partTableBody.innerHTML = "";
-      const filterMesin = filterMesinSelect.value;
-      const filterSn = filterSnSelect.value;
-      const filterDateFrom = document.getElementById("filter-date-from").value;
-      const filterDateTo = document.getElementById("filter-date-to").value;
-
-      let filteredParts = partData;
-
-      if (filterMesin) {
-        filteredParts = filteredParts.filter((p) => p.mesinId === filterMesin);
-      }
-
-      if (filterSn) {
-        filteredParts = filteredParts.filter((p) => {
-          const mesin = mesinData.find((m) => m.id === p.mesinId);
-          return mesin && mesin.sn === filterSn;
-        });
-      }
-
-      if (filterDateFrom) {
-        filteredParts = filteredParts.filter(
-          (p) => new Date(p.tanggalPencopotan) >= new Date(filterDateFrom)
-        );
-      }
-
-      if (filterDateTo) {
-        filteredParts = filteredParts.filter(
-          (p) => new Date(p.tanggalPencopotan) <= new Date(filterDateTo)
-        );
-      }
-
-      if (filteredParts.length === 0) {
+      if (partData.length === 0) {
         partTableBody.innerHTML = `
           <tr>
             <td colspan="8" class="px-4 py-8 text-center text-white/60">
@@ -435,25 +318,33 @@ html_code = """
         `;
         return;
       }
-
-      filteredParts.forEach((part, index) => {
+      partData.forEach((part) => {
         const mesin = mesinData.find((m) => m.id === part.mesinId);
-        const tujuan = part.tujuan || "-";
-        const note = part.note || "";
-        const sn = mesin ? mesin.sn : "-";
-
         const tr = document.createElement("tr");
         tr.className = "border-b border-white/10 hover:bg-white/5";
         tr.innerHTML = `
           <td class="px-4 py-3">${part.partNumber || "-"}</td>
           <td class="px-4 py-3">${part.nama}</td>
-          <td class="px-4 py-3">${mesin ? mesin.nama : "Unknown"}</td>
-          <td class="px-4 py-3">${sn}</td>
+          <td class="px-4 py-3">${mesin ? mesin.nama : "-"}</td>
+          <td class="px-4 py-3">${mesin ? mesin.sn : "-"}</td>
           <td class="px-4 py-3">${new Date(part.tanggalPencopotan).toLocaleDateString("id-ID")}</td>
-          <td class="px-4 py-3">${tujuan}</td>
+          <td class="px-4 py-3">${part.tujuan || "-"}</td>
           <td class="px-4 py-3">
-            <button onclick="alert('Lihat detail part belum diimplementasikan')" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded mr-2">
-              <i class="fas fa-eye"></i
+            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
+              <i class="fas fa-eye"></i>
+            </button>
+          </td>
+          <td class="px-4 py-3">${part.note || ""}</td>
+        `;
+        partTableBody.appendChild(tr);
+      });
+    }
+
+    // Run init
+    init();
+  </script>
+</body>
+</html>
 """
 
 st.components.v1.html(html_code, height=1000, scrolling=True)
