@@ -158,6 +158,16 @@ html_code = """
       <details>
         <summary>Filter Part</summary>
         <select>
+          <option>Semua Part Number</option>
+          <option>-</option>
+        </select>
+        <select>
+          <option>Semua Nama Part</option>
+          <option>DYE ROD Picoplus</option>
+          <option>Simmer Board</option>
+          <option>Temperature Sensor</option>
+        </select>
+        <select>
           <option>Semua Mesin</option>
           <option>Picoplus</option>
         </select>
