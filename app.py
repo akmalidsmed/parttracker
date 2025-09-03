@@ -147,11 +147,12 @@ html_code = """
             </tr>
           </thead>
           <tbody id="mesin-table-body">
-            <tr>
-              <td colspan="5" class="px-4 py-8 text-center text-white/60">
-                <i class="fas fa-cogs text-3xl mb-2"></i>
-                <p>Belum ada data mesin</p>
-              </td>
+            <tr class="border-b border-white/10 hover:bg-white/5">
+              <td class="px-4 py-3">Picoplus</td>
+              <td class="px-4 py-3">PC424M017</td>
+              <td class="px-4 py-3">31 Juli 2025</td>
+              <td class="px-4 py-3">0</td>
+              <td class="px-4 py-3">Belum dilengkapi</td>
             </tr>
           </tbody>
         </table>
@@ -234,13 +235,12 @@ html_code = """
     // Initialize page
     function init() {
       updateStats();
-      renderMesinTable();
       renderPartTable();
     }
 
     // Update stats
     function updateStats() {
-      statMesin.textContent = mesinData.length;
+      statMesin.textContent = 1; // karena sudah ada 1 mesin default
       statPart.textContent = partData.length;
 
       const now = new Date();
@@ -255,39 +255,6 @@ html_code = """
       });
       statMonitor.textContent = monitorCount;
       statWarning.textContent = warningCount;
-    }
-
-    // Render mesin table
-    function renderMesinTable() {
-      mesinTableBody.innerHTML = "";
-      if (mesinData.length === 0) {
-        mesinTableBody.innerHTML = `
-          <tr>
-            <td colspan="5" class="px-4 py-8 text-center text-white/60">
-              <i class="fas fa-cogs text-3xl mb-2"></i>
-              <p>Belum ada data mesin</p>
-            </td>
-          </tr>
-        `;
-        return;
-      }
-      mesinData.forEach((mesin) => {
-        const partCount = partData.filter((p) => p.mesinId === mesin.id).length;
-        const tr = document.createElement("tr");
-        tr.className = "border-b border-white/10 hover:bg-white/5";
-        tr.innerHTML = `
-          <td class="px-4 py-3">${{mesin.nama}}</td>
-          <td class="px-4 py-3">${{mesin.sn}}</td>
-          <td class="px-4 py-3">${{new Date(mesin.tanggalInput).toLocaleDateString("id-ID")}}</td>
-          <td class="px-4 py-3">${{partCount}}</td>
-          <td class="px-4 py-3">
-            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
-              <i class="fas fa-edit"></i>
-            </button>
-          </td>
-        `;
-        mesinTableBody.appendChild(tr);
-      });
     }
 
     // Render part table
@@ -305,14 +272,13 @@ html_code = """
         return;
       }
       partData.forEach((part) => {
-        const mesin = mesinData.find((m) => m.id === part.mesinId);
         const tr = document.createElement("tr");
         tr.className = "border-b border-white/10 hover:bg-white/5";
         tr.innerHTML = `
           <td class="px-4 py-3">${{part.partNumber || "-"}}</td>
           <td class="px-4 py-3">${{part.nama}}</td>
-          <td class="px-4 py-3">${{mesin ? mesin.nama : "-"}}</td>
-          <td class="px-4 py-3">${{mesin ? mesin.sn : "-"}}</td>
+          <td class="px-4 py-3">Picoplus</td>
+          <td class="px-4 py-3">PC424M017</td>
           <td class="px-4 py-3">${{new Date(part.tanggalPencopotan).toLocaleDateString("id-ID")}}</td>
           <td class="px-4 py-3">${{part.tujuan || "-"}}</td>
           <td class="px-4 py-3">
