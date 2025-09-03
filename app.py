@@ -51,41 +51,6 @@ html_code = """
       transform: translateY(-5px);
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
-
-    .status-badge {
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .status-new {
-      background: #10b981;
-      color: white;
-    }
-    .status-monitor {
-      background: #f59e0b;
-      color: white;
-    }
-    .status-warning {
-      background: #ef4444;
-      color: white;
-    }
-
-    .fade-in {
-      animation: fadeIn 0.5s ease-in;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
   </style>
 </head>
 <body>
@@ -100,30 +65,19 @@ html_code = """
 
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-      <div
-        class="card-hover bg-gradient-to-br from-blue-500 to-blue-600 p-6 rounded-xl text-white"
-      >
-        <div class="text-2xl font-bold mb-2" id="stat-mesin">0</div>
+      <div class="card-hover bg-gradient-to-br from-blue-500 to-blue-600 p-6 rounded-xl text-white">
+        <div class="text-2xl font-bold mb-2" id="stat-mesin">1</div>
         <div class="text-sm">Total Mesin</div>
       </div>
-
-      <div
-        class="card-hover bg-gradient-to-br from-green-500 to-green-600 p-6 rounded-xl text-white"
-      >
-        <div class="text-2xl font-bold mb-2" id="stat-part">0</div>
+      <div class="card-hover bg-gradient-to-br from-green-500 to-green-600 p-6 rounded-xl text-white">
+        <div class="text-2xl font-bold mb-2" id="stat-part">3</div>
         <div class="text-sm">Total Part Dicopot</div>
       </div>
-
-      <div
-        class="card-hover bg-gradient-to-br from-yellow-500 to-yellow-600 p-6 rounded-xl text-white"
-      >
+      <div class="card-hover bg-gradient-to-br from-yellow-500 to-yellow-600 p-6 rounded-xl text-white">
         <div class="text-2xl font-bold mb-2" id="stat-monitor">0</div>
         <div class="text-sm">Part Monitor</div>
       </div>
-
-      <div
-        class="card-hover bg-gradient-to-br from-red-500 to-red-600 p-6 rounded-xl text-white"
-      >
+      <div class="card-hover bg-gradient-to-br from-red-500 to-red-600 p-6 rounded-xl text-white">
         <div class="text-2xl font-bold mb-2" id="stat-warning">0</div>
         <div class="text-sm">Part Perhatian</div>
       </div>
@@ -134,7 +88,6 @@ html_code = """
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-white">Data Mesin</h2>
       </div>
-
       <div class="overflow-x-auto">
         <table class="w-full text-white">
           <thead class="bg-white/10">
@@ -151,7 +104,7 @@ html_code = """
               <td class="px-4 py-3">Picoplus</td>
               <td class="px-4 py-3">PC424M017</td>
               <td class="px-4 py-3">31 Juli 2025</td>
-              <td class="px-4 py-3">0</td>
+              <td class="px-4 py-3">3</td>
               <td class="px-4 py-3">Belum dilengkapi</td>
             </tr>
           </tbody>
@@ -164,32 +117,6 @@ html_code = """
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-white">Data Part Dicopot</h2>
       </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <select
-          id="filter-mesin"
-          class="px-4 py-2 rounded-lg bg-white/90 border-none focus:ring-2 focus:ring-blue-400 outline-none"
-        >
-          <option value="">Semua Mesin</option>
-        </select>
-        <select
-          id="filter-sn"
-          class="px-4 py-2 rounded-lg bg-white/90 border-none focus:ring-2 focus:ring-blue-400 outline-none"
-        >
-          <option value="">Semua SN Mesin</option>
-        </select>
-        <input
-          type="date"
-          id="filter-date-from"
-          class="px-4 py-2 rounded-lg bg-white/90 border-none focus:ring-2 focus:ring-blue-400 outline-none"
-        />
-        <input
-          type="date"
-          id="filter-date-to"
-          class="px-4 py-2 rounded-lg bg-white/90 border-none focus:ring-2 focus:ring-blue-400 outline-none"
-        />
-      </div>
-
       <div class="overflow-x-auto">
         <table class="w-full text-white">
           <thead class="bg-white/10">
@@ -205,96 +132,41 @@ html_code = """
             </tr>
           </thead>
           <tbody id="part-table-body">
-            <tr>
-              <td colspan="8" class="px-4 py-8 text-center text-white/60">
-                <i class="fas fa-microchip text-3xl mb-2"></i>
-                <p>Belum ada data part</p>
-              </td>
+            <tr class="border-b border-white/10 hover:bg-white/5">
+              <td class="px-4 py-3">-</td>
+              <td class="px-4 py-3">DYE ROD Picoplus</td>
+              <td class="px-4 py-3">Picoplus</td>
+              <td class="px-4 py-3">PC424M017</td>
+              <td class="px-4 py-3">31 Juli 2025</td>
+              <td class="px-4 py-3">Untuk Tosca Clinic Menteng</td>
+              <td class="px-4 py-3">Menunggu part pengganti</td>
+              <td class="px-4 py-3">Dikirim 1 Agustus 2025</td>
+            </tr>
+            <tr class="border-b border-white/10 hover:bg-white/5">
+              <td class="px-4 py-3">-</td>
+              <td class="px-4 py-3">Simmer Board</td>
+              <td class="px-4 py-3">Picoplus</td>
+              <td class="px-4 py-3">PC424M017</td>
+              <td class="px-4 py-3">6 Agustus 2025</td>
+              <td class="px-4 py-3">Untuk Tosca Clinic Menteng</td>
+              <td class="px-4 py-3">Menunggu part pengganti</td>
+              <td class="px-4 py-3">Dikirim 6 Agustus 2025</td>
+            </tr>
+            <tr class="border-b border-white/10 hover:bg-white/5">
+              <td class="px-4 py-3">-</td>
+              <td class="px-4 py-3">Temperature Sensor</td>
+              <td class="px-4 py-3">Picoplus</td>
+              <td class="px-4 py-3">PC424M017</td>
+              <td class="px-4 py-3">2 September 2025</td>
+              <td class="px-4 py-3">Untuk Votre Menteng</td>
+              <td class="px-4 py-3">Menunggu part pengganti</td>
+              <td class="px-4 py-3">Dikirim 2 September 2025, dicopot oleh rizki di logos</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
-
-  <script>
-    // Data arrays
-    let mesinData = JSON.parse(localStorage.getItem("mesinData")) || [];
-    let partData = JSON.parse(localStorage.getItem("partData")) || [];
-
-    // Stats elements
-    const statMesin = document.getElementById("stat-mesin");
-    const statPart = document.getElementById("stat-part");
-    const statMonitor = document.getElementById("stat-monitor");
-    const statWarning = document.getElementById("stat-warning");
-
-    // Table bodies
-    const mesinTableBody = document.getElementById("mesin-table-body");
-    const partTableBody = document.getElementById("part-table-body");
-
-    // Initialize page
-    function init() {
-      updateStats();
-      renderPartTable();
-    }
-
-    // Update stats
-    function updateStats() {
-      statMesin.textContent = 1; // karena sudah ada 1 mesin default
-      statPart.textContent = partData.length;
-
-      const now = new Date();
-      let monitorCount = 0;
-      let warningCount = 0;
-      partData.forEach((part) => {
-        const diffDays = Math.floor(
-          (now - new Date(part.tanggalPencopotan)) / (1000 * 60 * 60 * 24)
-        );
-        if (diffDays > 30) warningCount++;
-        else if (diffDays > 7) monitorCount++;
-      });
-      statMonitor.textContent = monitorCount;
-      statWarning.textContent = warningCount;
-    }
-
-    // Render part table
-    function renderPartTable() {
-      partTableBody.innerHTML = "";
-      if (partData.length === 0) {
-        partTableBody.innerHTML = `
-          <tr>
-            <td colspan="8" class="px-4 py-8 text-center text-white/60">
-              <i class="fas fa-microchip text-3xl mb-2"></i>
-              <p>Belum ada data part</p>
-            </td>
-          </tr>
-        `;
-        return;
-      }
-      partData.forEach((part) => {
-        const tr = document.createElement("tr");
-        tr.className = "border-b border-white/10 hover:bg-white/5";
-        tr.innerHTML = `
-          <td class="px-4 py-3">${{part.partNumber || "-"}}</td>
-          <td class="px-4 py-3">${{part.nama}}</td>
-          <td class="px-4 py-3">Picoplus</td>
-          <td class="px-4 py-3">PC424M017</td>
-          <td class="px-4 py-3">${{new Date(part.tanggalPencopotan).toLocaleDateString("id-ID")}}</td>
-          <td class="px-4 py-3">${{part.tujuan || "-"}}</td>
-          <td class="px-4 py-3">
-            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
-              <i class="fas fa-eye"></i>
-            </button>
-          </td>
-          <td class="px-4 py-3">${{part.note || ""}}</td>
-        `;
-        partTableBody.appendChild(tr);
-      });
-    }
-
-    // Run init
-    init();
-  </script>
 </body>
 </html>
 """
