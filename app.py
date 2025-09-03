@@ -160,7 +160,7 @@ html_code = """
               <td class="px-4 py-3">2 September 2025</td>
               <td class="px-4 py-3">Untuk Votre Menteng</td>
               <td class="px-4 py-3">Menunggu part pengganti</td>
-              <td class="px-4 py-3">Dikirim 2 September 2025, dicopot oleh rizki di logos</td>
+              <td class="px-4 py-3">Dikirim 2 September 2025, dicopot oleh rizki di logos dan dikirimkan ke Slipi up Rofi/Akbar</td>
             </tr>
           </tbody>
         </table>
