@@ -11,142 +11,176 @@ html_code = """
   <title>Monitoring Pengambilan Part dari Mesin</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #ffffff;
-      color: #1f2937;
+    /* Fullscreen & reset */
+    html, body {
+      height: 100%;
       margin: 0;
-      padding: 2rem 1rem;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ff6ec4 0%, #7873f5 100%);
+      color: #fff;
+      overflow-y: auto;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
       min-height: 100vh;
+      padding: 2rem 3rem;
     }
     header {
-      max-width: 1200px;
-      margin: 0 auto 2rem auto;
       text-align: center;
+      margin-bottom: 3rem;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
     header h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: #111827;
-      margin-bottom: 0.25rem;
-    }
-    header p {
-      font-size: 1.125rem;
-      color: #6b7280;
-    }
-    .stats {
-      max-width: 1200px;
-      margin: 0 auto 3rem auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1.5rem;
-    }
-    .stat-card {
-      background: #f3f4f6;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
-      text-align: center;
-      transition: box-shadow 0.3s ease;
-      cursor: default;
-    }
-    .stat-card:hover {
-      box-shadow: 0 8px 20px rgb(0 0 0 / 0.15);
-    }
-    .stat-number {
-      font-size: 2.75rem;
+      font-size: 3rem;
       font-weight: 900;
-      color: #111827;
       margin-bottom: 0.25rem;
-      font-feature-settings: "tnum";
-      font-variant-numeric: tabular-nums;
-    }
-    .stat-label {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: #6b7280;
-      text-transform: uppercase;
       letter-spacing: 0.05em;
     }
+    header p {
+      font-size: 1.25rem;
+      font-weight: 500;
+      opacity: 0.85;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto 4rem auto;
+      width: 100%;
+    }
+    .stat-card {
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      font-weight: 700;
+      font-size: 2.5rem;
+      text-align: center;
+      box-shadow: 0 8px 20px rgb(0 0 0 / 0.25);
+      cursor: default;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    .stat-label {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.9;
+    }
+    .stat-blue { background: #3b82f6; box-shadow: 0 8px 20px #2563ebcc; }
+    .stat-green { background: #10b981; box-shadow: 0 8px 20px #059669cc; }
+    .stat-yellow { background: #fbbf24; box-shadow: 0 8px 20px #d97706cc; color: #1f2937; }
+    .stat-red { background: #ef4444; box-shadow: 0 8px 20px #b91c1ccc; }
+    .stat-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgb(0 0 0 / 0.4);
+    }
+
     section {
       max-width: 1200px;
-      margin: 0 auto 3rem auto;
-      background: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 1px 6px rgb(0 0 0 / 0.1);
-      padding: 2rem;
+      margin: 0 auto 4rem auto;
+      background: rgba(255 255 255 / 0.15);
+      border-radius: 20px;
+      padding: 2rem 2.5rem;
+      box-shadow: 0 8px 30px rgb(0 0 0 / 0.2);
+      backdrop-filter: blur(12px);
+      color: #fff;
     }
     section h2 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: #111827;
-      margin-bottom: 1rem;
-      border-bottom: 2px solid #e5e7eb;
-      padding-bottom: 0.5rem;
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
     }
     details summary {
-      font-weight: 600;
-      font-size: 1rem;
-      color: #374151;
+      font-weight: 700;
+      font-size: 1.125rem;
       cursor: pointer;
       margin-bottom: 1rem;
-      outline: none;
       list-style: none;
+      user-select: none;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
     details[open] summary::after {
       content: "▲";
       float: right;
-      font-size: 0.75rem;
-      color: #6b7280;
+      font-size: 0.9rem;
+      opacity: 0.7;
     }
     details summary::after {
       content: "▼";
       float: right;
-      font-size: 0.75rem;
-      color: #6b7280;
+      font-size: 0.9rem;
+      opacity: 0.7;
     }
     .filters {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
     }
     select {
       flex: 1 1 180px;
-      padding: 0.5rem 0.75rem;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
+      padding: 0.6rem 1rem;
+      border-radius: 12px;
+      border: none;
       font-size: 1rem;
-      color: #374151;
-      background-color: #f9fafb;
-      transition: border-color 0.2s ease;
+      font-weight: 600;
+      color: #1f2937;
+      background: #fef3c7;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.15);
+      transition: box-shadow 0.3s ease;
+      cursor: pointer;
+      user-select: none;
     }
     select:focus {
       outline: none;
-      border-color: #2563eb;
-      box-shadow: 0 0 0 3px rgb(37 99 235 / 0.3);
-      background-color: white;
+      box-shadow: 0 0 0 4px #fbbf24aa;
+      background: #fde68a;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.95rem;
-      color: #374151;
+      font-size: 1rem;
+      color: #1f2937;
+      background: #fef3c7;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgb(0 0 0 / 0.15);
     }
     thead tr {
-      background-color: #f9fafb;
-      border-bottom: 2px solid #e5e7eb;
+      background: #f59e0b;
+      color: #1f2937;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
     th, td {
-      padding: 0.75rem 1rem;
-      text-align: left;
-      border-bottom: 1px solid #e5e7eb;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid #fcd34d;
       vertical-align: middle;
     }
     tbody tr:hover {
-      background-color: #f3f4f6;
+      background: #fde68a;
+      cursor: default;
     }
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
+      body {
+        padding: 1.5rem 1rem;
+      }
+      header h1 {
+        font-size: 2rem;
+      }
+      section {
+        padding: 1.5rem 1.5rem;
+      }
+      .stat-card {
+        font-size: 2rem;
+        padding: 1.5rem 1rem;
+      }
       .filters {
         flex-direction: column;
       }
@@ -163,19 +197,19 @@ html_code = """
   </header>
 
   <section class="stats" aria-label="Statistik Pengambilan Part">
-    <div class="stat-card" role="region" aria-labelledby="total-mesin-label">
+    <div class="stat-card stat-blue" role="region" aria-labelledby="total-mesin-label">
       <div class="stat-number" id="total-mesin">1</div>
       <div class="stat-label" id="total-mesin-label">Total Mesin</div>
     </div>
-    <div class="stat-card" role="region" aria-labelledby="total-part-label">
+    <div class="stat-card stat-green" role="region" aria-labelledby="total-part-label">
       <div class="stat-number" id="total-part">3</div>
       <div class="stat-label" id="total-part-label">Total Part Dicopot</div>
     </div>
-    <div class="stat-card" role="region" aria-labelledby="part-monitor-label">
+    <div class="stat-card stat-yellow" role="region" aria-labelledby="part-monitor-label">
       <div class="stat-number" id="part-monitor">2</div>
       <div class="stat-label" id="part-monitor-label">Part Monitor (&lt; 1 bulan)</div>
     </div>
-    <div class="stat-card" role="region" aria-labelledby="part-perhatian-label">
+    <div class="stat-card stat-red" role="region" aria-labelledby="part-perhatian-label">
       <div class="stat-number" id="part-perhatian">1</div>
       <div class="stat-label" id="part-perhatian-label">Part Perhatian (&ge; 1 bulan)</div>
     </div>
@@ -345,4 +379,4 @@ html_code = """
 </html>
 """
 
-st.components.v1.html(html_code, height=2200, scrolling=True)
+st.components.v1.html(html_code, height=1000, scrolling=True)
