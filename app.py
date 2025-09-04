@@ -13,112 +13,179 @@ html_code = """
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #f9fafb;
-      color: #111827;
+      background-color: #ffffff;
+      color: #1f2937;
       margin: 0;
-      padding: 20px;
+      padding: 2rem 1rem;
       min-height: 100vh;
     }
-    h1, h2 {
-      font-weight: 700;
+    header {
+      max-width: 1200px;
+      margin: 0 auto 2rem auto;
+      text-align: center;
     }
-    .card {
-      background: white;
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #111827;
+      margin-bottom: 0.25rem;
+    }
+    header p {
+      font-size: 1.125rem;
+      color: #6b7280;
+    }
+    .stats {
+      max-width: 1200px;
+      margin: 0 auto 3rem auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+    }
+    .stat-card {
+      background: #f3f4f6;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgb(0 0 0 / 0.05);
       padding: 1.5rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+      text-align: center;
+      transition: box-shadow 0.3s ease;
+      cursor: default;
     }
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 10px 25px rgb(0 0 0 / 0.1);
+    .stat-card:hover {
+      box-shadow: 0 8px 20px rgb(0 0 0 / 0.15);
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.9rem;
+    .stat-number {
+      font-size: 2.75rem;
+      font-weight: 900;
+      color: #111827;
+      margin-bottom: 0.25rem;
+      font-feature-settings: "tnum";
+      font-variant-numeric: tabular-nums;
     }
-    thead {
-      background-color: #e5e7eb;
+    .stat-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
-    th, td {
-      padding: 0.75rem 1rem;
-      text-align: left;
-      border-bottom: 1px solid #d1d5db;
+    section {
+      max-width: 1200px;
+      margin: 0 auto 3rem auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 1px 6px rgb(0 0 0 / 0.1);
+      padding: 2rem;
     }
-    tbody tr:hover {
-      background-color: #f3f4f6;
+    section h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 0.5rem;
     }
     details summary {
-      cursor: pointer;
       font-weight: 600;
-      margin-bottom: 0.75rem;
+      font-size: 1rem;
+      color: #374151;
+      cursor: pointer;
+      margin-bottom: 1rem;
       outline: none;
+      list-style: none;
+    }
+    details[open] summary::after {
+      content: "▲";
+      float: right;
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+    details summary::after {
+      content: "▼";
+      float: right;
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
     }
     select {
-      padding: 0.4rem 0.75rem;
+      flex: 1 1 180px;
+      padding: 0.5rem 0.75rem;
       border: 1px solid #d1d5db;
-      border-radius: 6px;
-      margin-right: 0.75rem;
-      font-size: 0.9rem;
+      border-radius: 8px;
+      font-size: 1rem;
       color: #374151;
-      background-color: white;
+      background-color: #f9fafb;
       transition: border-color 0.2s ease;
     }
     select:focus {
       outline: none;
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgb(59 130 246 / 0.3);
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgb(37 99 235 / 0.3);
+      background-color: white;
     }
-    .filters {
-      margin-bottom: 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      color: #374151;
+    }
+    thead tr {
+      background-color: #f9fafb;
+      border-bottom: 2px solid #e5e7eb;
+    }
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+      vertical-align: middle;
+    }
+    tbody tr:hover {
+      background-color: #f3f4f6;
     }
     @media (max-width: 640px) {
       .filters {
         flex-direction: column;
       }
       select {
-        margin-right: 0;
-        width: 100%;
+        flex: 1 1 100%;
       }
     }
   </style>
 </head>
 <body>
-  <header class="mb-8 text-center">
-    <h1 class="text-4xl text-gray-900 mb-2">Monitoring Pengambilan Part dari Mesin</h1>
-    <p class="text-gray-600 text-lg">Sistem tracking pengambilan part mesin</p>
+  <header>
+    <h1>Monitoring Pengambilan Part dari Mesin</h1>
+    <p>Sistem tracking pengambilan part mesin</p>
   </header>
 
-  <!-- Stats Cards -->
-  <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-10">
-    <div class="card bg-blue-50 text-blue-700">
-      <div class="text-3xl font-extrabold mb-1" id="stat-mesin">1</div>
-      <div class="uppercase tracking-wide text-sm font-semibold">Total Mesin</div>
+  <section class="stats" aria-label="Statistik Pengambilan Part">
+    <div class="stat-card" role="region" aria-labelledby="total-mesin-label">
+      <div class="stat-number" id="total-mesin">1</div>
+      <div class="stat-label" id="total-mesin-label">Total Mesin</div>
     </div>
-    <div class="card bg-green-50 text-green-700">
-      <div class="text-3xl font-extrabold mb-1" id="stat-part">3</div>
-      <div class="uppercase tracking-wide text-sm font-semibold">Total Part Dicopot</div>
+    <div class="stat-card" role="region" aria-labelledby="total-part-label">
+      <div class="stat-number" id="total-part">3</div>
+      <div class="stat-label" id="total-part-label">Total Part Dicopot</div>
     </div>
-    <div class="card bg-yellow-50 text-yellow-700">
-      <div class="text-3xl font-extrabold mb-1" id="stat-monitor">2</div>
-      <div class="uppercase tracking-wide text-sm font-semibold">Part Monitor (&lt; 1 bulan)</div>
+    <div class="stat-card" role="region" aria-labelledby="part-monitor-label">
+      <div class="stat-number" id="part-monitor">2</div>
+      <div class="stat-label" id="part-monitor-label">Part Monitor (&lt; 1 bulan)</div>
     </div>
-    <div class="card bg-red-50 text-red-700">
-      <div class="text-3xl font-extrabold mb-1" id="stat-warning">1</div>
-      <div class="uppercase tracking-wide text-sm font-semibold">Part Perhatian (&ge; 1 bulan)</div>
+    <div class="stat-card" role="region" aria-labelledby="part-perhatian-label">
+      <div class="stat-number" id="part-perhatian">1</div>
+      <div class="stat-label" id="part-perhatian-label">Part Perhatian (&ge; 1 bulan)</div>
     </div>
   </section>
 
-  <!-- Data Mesin -->
-  <section class="card mb-10">
-    <h2 class="text-2xl mb-4">Data Mesin</h2>
-    <details class="mb-4" open>
+  <section aria-labelledby="data-mesin-title">
+    <h2 id="data-mesin-title">Data Mesin</h2>
+    <details open>
       <summary>Filter Mesin</summary>
-      <div class="filters mt-3">
+      <div class="filters">
         <select id="filter-mesin-nama" aria-label="Filter Nama Mesin">
           <option value="">Semua Nama Mesin</option>
           <option value="Picoplus">Picoplus</option>
@@ -129,7 +196,7 @@ html_code = """
         </select>
       </div>
     </details>
-    <div class="overflow-x-auto">
+    <div style="overflow-x:auto;">
       <table id="mesinTable" role="table" aria-label="Tabel Data Mesin">
         <thead>
           <tr>
@@ -155,12 +222,11 @@ html_code = """
     </div>
   </section>
 
-  <!-- Data Part Dicopot -->
-  <section class="card">
-    <h2 class="text-2xl mb-4">Data Part Dicopot</h2>
-    <details class="mb-4" open>
+  <section aria-labelledby="data-part-title">
+    <h2 id="data-part-title">Data Part Dicopot</h2>
+    <details open>
       <summary>Filter Part</summary>
-      <div class="filters mt-3">
+      <div class="filters">
         <select id="filter-part-number" aria-label="Filter Part Number">
           <option value="">Semua Part Number</option>
           <option value="-">-</option>
@@ -181,7 +247,7 @@ html_code = """
         </select>
       </div>
     </details>
-    <div class="overflow-x-auto">
+    <div style="overflow-x:auto;">
       <table id="partTable" role="table" aria-label="Tabel Data Part Dicopot">
         <thead>
           <tr>
