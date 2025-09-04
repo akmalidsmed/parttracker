@@ -11,45 +11,51 @@ html_code = """
   <title>Monitoring Pengambilan Part dari Mesin</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Fullscreen & reset */
+    /* Fullscreen tanpa space luar */
     html, body {
       height: 100%;
+      width: 100%;
       margin: 0;
       padding: 0;
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(135deg, #ff6ec4 0%, #7873f5 100%);
       color: #fff;
       overflow-y: auto;
+      overflow-x: hidden;
     }
     body {
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      padding: 2rem 3rem;
+      width: 100vw;
+      box-sizing: border-box;
     }
     header {
       text-align: center;
-      margin-bottom: 3rem;
+      padding: 2rem 1rem 3rem 1rem;
       text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      width: 100%;
+      box-sizing: border-box;
     }
     header h1 {
       font-size: 3rem;
       font-weight: 900;
-      margin-bottom: 0.25rem;
+      margin: 0 0 0.25rem 0;
       letter-spacing: 0.05em;
     }
     header p {
       font-size: 1.25rem;
       font-weight: 500;
       opacity: 0.85;
+      margin: 0;
     }
     .stats {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto 4rem auto;
       width: 100%;
+      padding: 0 1rem 4rem 1rem;
+      box-sizing: border-box;
     }
     .stat-card {
       border-radius: 20px;
@@ -80,14 +86,15 @@ html_code = """
     }
 
     section {
-      max-width: 1200px;
-      margin: 0 auto 4rem auto;
       background: rgba(255 255 255 / 0.15);
       border-radius: 20px;
       padding: 2rem 2.5rem;
       box-shadow: 0 8px 30px rgb(0 0 0 / 0.2);
       backdrop-filter: blur(12px);
       color: #fff;
+      margin: 0 1rem 4rem 1rem;
+      box-sizing: border-box;
+      width: auto;
     }
     section h2 {
       font-size: 2rem;
@@ -169,13 +176,17 @@ html_code = """
     }
     @media (max-width: 768px) {
       body {
-        padding: 1.5rem 1rem;
+        padding: 0;
+      }
+      header {
+        padding: 1.5rem 1rem 2rem 1rem;
       }
       header h1 {
         font-size: 2rem;
       }
       section {
         padding: 1.5rem 1.5rem;
+        margin: 0 1rem 3rem 1rem;
       }
       .stat-card {
         font-size: 2rem;
