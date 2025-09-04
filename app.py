@@ -10,226 +10,230 @@ html_code = """
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Monitoring Pengambilan Part dari Mesin</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
   <style>
-    :root {
-      --primary: #3b82f6;
-      --secondary: #10b981;
-      --accent: #f59e0b;
-      --warning: #ef4444;
-      --light: #f3f4f6;
-      --dark: #1f2937;
-    }
-
-    html, body {
-      height: 100%;
-      margin: 0;
-    }
-
     body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      min-width: 100vw;
-      display: flex;
-      flex-direction: column;
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
+      color: #111827;
       margin: 0;
       padding: 20px;
-      position: relative;
+      min-height: 100vh;
     }
-
-    .glass-effect {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
+    h1, h2 {
+      font-weight: 700;
+    }
+    .card {
+      background: white;
       border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 12px rgb(0 0 0 / 0.05);
+      padding: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
-    .card-hover {
-      transition: all 0.3s ease;
-      transform: translateY(0);
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgb(0 0 0 / 0.1);
     }
-
-    .card-hover:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
     }
-
-    details {
-      margin-bottom: 1rem;
+    thead {
+      background-color: #e5e7eb;
     }
-
-    summary {
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #d1d5db;
+    }
+    tbody tr:hover {
+      background-color: #f3f4f6;
+    }
+    details summary {
       cursor: pointer;
       font-weight: 600;
-      color: white;
-      margin-bottom: .5rem;
+      margin-bottom: 0.75rem;
+      outline: none;
     }
-
-    select, input[type="text"] {
-      padding: 6px 10px;
+    select {
+      padding: 0.4rem 0.75rem;
+      border: 1px solid #d1d5db;
       border-radius: 6px;
-      border: none;
-      margin-right: 10px;
-      color: #111;
+      margin-right: 0.75rem;
+      font-size: 0.9rem;
+      color: #374151;
+      background-color: white;
+      transition: border-color 0.2s ease;
+    }
+    select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgb(59 130 246 / 0.3);
+    }
+    .filters {
+      margin-bottom: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    @media (max-width: 640px) {
+      .filters {
+        flex-direction: column;
+      }
+      select {
+        margin-right: 0;
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="w-full h-full">
-    <!-- Header -->
-    <div class="glass-effect p-6 mb-6 text-center">
-      <h1 class="text-3xl font-bold text-white mb-2">
-        Monitoring Pengambilan Part dari Mesin
-      </h1>
-      <p class="text-white/80">Sistem tracking pengambilan part mesin</p>
-    </div>
+  <header class="mb-8 text-center">
+    <h1 class="text-4xl text-gray-900 mb-2">Monitoring Pengambilan Part dari Mesin</h1>
+    <p class="text-gray-600 text-lg">Sistem tracking pengambilan part mesin</p>
+  </header>
 
-    <!-- Stats Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-      <div class="card-hover bg-gradient-to-br from-blue-500 to-blue-600 p-6 rounded-xl text-white">
-        <div class="text-2xl font-bold mb-2" id="stat-mesin">1</div>
-        <div class="text-sm">Total Mesin</div>
-      </div>
-      <div class="card-hover bg-gradient-to-br from-green-500 to-green-600 p-6 rounded-xl text-white">
-        <div class="text-2xl font-bold mb-2" id="stat-part">3</div>
-        <div class="text-sm">Total Part Dicopot</div>
-      </div>
-      <div class="card-hover bg-gradient-to-br from-yellow-500 to-yellow-600 p-6 rounded-xl text-white">
-        <div class="text-2xl font-bold mb-2" id="stat-monitor">2</div>
-        <div class="text-sm">Part Monitor (< 1 bulan)</div>
-      </div>
-      <div class="card-hover bg-gradient-to-br from-red-500 to-red-600 p-6 rounded-xl text-white">
-        <div class="text-2xl font-bold mb-2" id="stat-warning">1</div>
-        <div class="text-sm">Part Perhatian (>= 1 bulan)</div>
-      </div>
+  <!-- Stats Cards -->
+  <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+    <div class="card bg-blue-50 text-blue-700">
+      <div class="text-3xl font-extrabold mb-1" id="stat-mesin">1</div>
+      <div class="uppercase tracking-wide text-sm font-semibold">Total Mesin</div>
     </div>
+    <div class="card bg-green-50 text-green-700">
+      <div class="text-3xl font-extrabold mb-1" id="stat-part">3</div>
+      <div class="uppercase tracking-wide text-sm font-semibold">Total Part Dicopot</div>
+    </div>
+    <div class="card bg-yellow-50 text-yellow-700">
+      <div class="text-3xl font-extrabold mb-1" id="stat-monitor">2</div>
+      <div class="uppercase tracking-wide text-sm font-semibold">Part Monitor (&lt; 1 bulan)</div>
+    </div>
+    <div class="card bg-red-50 text-red-700">
+      <div class="text-3xl font-extrabold mb-1" id="stat-warning">1</div>
+      <div class="uppercase tracking-wide text-sm font-semibold">Part Perhatian (&ge; 1 bulan)</div>
+    </div>
+  </section>
 
-    <!-- Data Mesin -->
-    <div class="glass-effect p-6 mb-8">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-white">Data Mesin</h2>
-      </div>
-      <details>
-        <summary>Filter Mesin</summary>
-        <select id="filter-mesin-nama">
+  <!-- Data Mesin -->
+  <section class="card mb-10">
+    <h2 class="text-2xl mb-4">Data Mesin</h2>
+    <details class="mb-4" open>
+      <summary>Filter Mesin</summary>
+      <div class="filters mt-3">
+        <select id="filter-mesin-nama" aria-label="Filter Nama Mesin">
           <option value="">Semua Nama Mesin</option>
           <option value="Picoplus">Picoplus</option>
         </select>
-        <select id="filter-mesin-sn">
+        <select id="filter-mesin-sn" aria-label="Filter Serial Number Mesin">
           <option value="">Semua Serial Number</option>
           <option value="PC424M017">PC424M017</option>
         </select>
-      </details>
-      <div class="overflow-x-auto">
-        <table class="w-full text-white" id="mesinTable">
-          <thead class="bg-white/10">
-            <tr>
-              <th class="px-4 py-3 text-left">Nama Mesin</th>
-              <th class="px-4 py-3 text-left">Serial Number</th>
-              <th class="px-4 py-3 text-left">Tanggal Input</th>
-              <th class="px-4 py-3 text-left">Jumlah Part</th>
-              <th class="px-4 py-3 text-left">Aksi</th>
-              <th class="px-4 py-3 text-left">Note</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="border-b border-white/10 hover:bg-white/5">
-              <td class="px-4 py-3">Picoplus</td>
-              <td class="px-4 py-3">PC424M017</td>
-              <td class="px-4 py-3">31 Juli 2025</td>
-              <td class="px-4 py-3">3</td>
-              <td class="px-4 py-3">Belum dilengkapi</td>
-              <td class="px-4 py-3">Mesin Stock</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
+    </details>
+    <div class="overflow-x-auto">
+      <table id="mesinTable" role="table" aria-label="Tabel Data Mesin">
+        <thead>
+          <tr>
+            <th>Nama Mesin</th>
+            <th>Serial Number</th>
+            <th>Tanggal Input</th>
+            <th>Jumlah Part</th>
+            <th>Aksi</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Picoplus</td>
+            <td>PC424M017</td>
+            <td>31 Juli 2025</td>
+            <td>3</td>
+            <td>Belum dilengkapi</td>
+            <td>Mesin Stock</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+  </section>
 
-    <!-- Data Part Dicopot -->
-    <div class="glass-effect p-6 mb-8">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-white">Data Part Dicopot</h2>
-      </div>
-      <details>
-        <summary>Filter Part</summary>
-        <select id="filter-part-number">
+  <!-- Data Part Dicopot -->
+  <section class="card">
+    <h2 class="text-2xl mb-4">Data Part Dicopot</h2>
+    <details class="mb-4" open>
+      <summary>Filter Part</summary>
+      <div class="filters mt-3">
+        <select id="filter-part-number" aria-label="Filter Part Number">
           <option value="">Semua Part Number</option>
           <option value="-">-</option>
         </select>
-        <select id="filter-part-nama">
+        <select id="filter-part-nama" aria-label="Filter Nama Part">
           <option value="">Semua Nama Part</option>
           <option value="DYE ROD Picoplus">DYE ROD Picoplus</option>
           <option value="Simmer Board">Simmer Board</option>
           <option value="Temperature Sensor">Temperature Sensor</option>
         </select>
-        <select id="filter-part-mesin">
+        <select id="filter-part-mesin" aria-label="Filter Mesin">
           <option value="">Semua Mesin</option>
           <option value="Picoplus">Picoplus</option>
         </select>
-        <select id="filter-part-sn">
+        <select id="filter-part-sn" aria-label="Filter Serial Number">
           <option value="">Semua SN</option>
           <option value="PC424M017">PC424M017</option>
         </select>
-      </details>
-      <div class="overflow-x-auto">
-        <table class="w-full text-white" id="partTable">
-          <thead class="bg-white/10">
-            <tr>
-              <th class="px-4 py-3 text-left">Part Number</th>
-              <th class="px-4 py-3 text-left">Nama Part</th>
-              <th class="px-4 py-3 text-left">Mesin</th>
-              <th class="px-4 py-3 text-left">SN</th>
-              <th class="px-4 py-3 text-left">Tanggal Dicopot</th>
-              <th class="px-4 py-3 text-left">Aging (hari)</th>
-              <th class="px-4 py-3 text-left">Tujuan</th>
-              <th class="px-4 py-3 text-left">Aksi</th>
-              <th class="px-4 py-3 text-left">Note</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="border-b border-white/10 hover:bg-white/5">
-              <td class="px-4 py-3">-</td>
-              <td class="px-4 py-3">DYE ROD Picoplus</td>
-              <td class="px-4 py-3">Picoplus</td>
-              <td class="px-4 py-3">PC424M017</td>
-              <td class="px-4 py-3">31 Juli 2025</td>
-              <td class="px-4 py-3">35 hari</td>
-              <td class="px-4 py-3">Untuk Tosca Clinic Menteng</td>
-              <td class="px-4 py-3">Menunggu part pengganti</td>
-              <td class="px-4 py-3">Dikirim 1 Agustus 2025</td>
-            </tr>
-            <tr class="border-b border-white/10 hover:bg-white/5">
-              <td class="px-4 py-3">-</td>
-              <td class="px-4 py-3">Simmer Board</td>
-              <td class="px-4 py-3">Picoplus</td>
-              <td class="px-4 py-3">PC424M017</td>
-              <td class="px-4 py-3">6 Agustus 2025</td>
-              <td class="px-4 py-3">29 hari</td>
-              <td class="px-4 py-3">Untuk Tosca Clinic Menteng</td>
-              <td class="px-4 py-3">Menunggu part pengganti</td>
-              <td class="px-4 py-3">Dikirim 6 Agustus 2025</td>
-            </tr>
-            <tr class="border-b border-white/10 hover:bg-white/5">
-              <td class="px-4 py-3">-</td>
-              <td class="px-4 py-3">Temperature Sensor</td>
-              <td class="px-4 py-3">Picoplus</td>
-              <td class="px-4 py-3">PC424M017</td>
-              <td class="px-4 py-3">2 September 2025</td>
-              <td class="px-4 py-3">2 hari</td>
-              <td class="px-4 py-3">Untuk Votre Menteng</td>
-              <td class="px-4 py-3">Menunggu part pengganti</td>
-              <td class="px-4 py-3">Dikirim 2 September 2025, dicopot oleh rizki di logos</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
+    </details>
+    <div class="overflow-x-auto">
+      <table id="partTable" role="table" aria-label="Tabel Data Part Dicopot">
+        <thead>
+          <tr>
+            <th>Part Number</th>
+            <th>Nama Part</th>
+            <th>Mesin</th>
+            <th>SN</th>
+            <th>Tanggal Dicopot</th>
+            <th>Aging (hari)</th>
+            <th>Tujuan</th>
+            <th>Aksi</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>-</td>
+            <td>DYE ROD Picoplus</td>
+            <td>Picoplus</td>
+            <td>PC424M017</td>
+            <td>31 Juli 2025</td>
+            <td>35 hari</td>
+            <td>Untuk Tosca Clinic Menteng</td>
+            <td>Menunggu part pengganti</td>
+            <td>Dikirim 1 Agustus 2025</td>
+          </tr>
+          <tr>
+            <td>-</td>
+            <td>Simmer Board</td>
+            <td>Picoplus</td>
+            <td>PC424M017</td>
+            <td>6 Agustus 2025</td>
+            <td>29 hari</td>
+            <td>Untuk Tosca Clinic Menteng</td>
+            <td>Menunggu part pengganti</td>
+            <td>Dikirim 6 Agustus 2025</td>
+          </tr>
+          <tr>
+            <td>-</td>
+            <td>Temperature Sensor</td>
+            <td>Picoplus</td>
+            <td>PC424M017</td>
+            <td>2 September 2025</td>
+            <td>2 hari</td>
+            <td>Untuk Votre Menteng</td>
+            <td>Menunggu part pengganti</td>
+            <td>Dikirim 2 September 2025, dicopot oleh rizki di logos</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>
+  </section>
 
   <script>
     function filterTable(tableId, filters) {
@@ -239,7 +243,7 @@ html_code = """
         let show = true;
         const tds = trs[i].getElementsByTagName('td');
         filters.forEach((filter, index) => {
-          if (filter.value && !tds[index].innerText.includes(filter.value)) {
+          if (filter.value && !tds[index].innerText.toLowerCase().includes(filter.value.toLowerCase())) {
             show = false;
           }
         });
@@ -247,50 +251,28 @@ html_code = """
       }
     }
 
-    document.getElementById('filter-mesin-nama').addEventListener('change', () => {
-      filterTable('mesinTable', [
-        document.getElementById('filter-mesin-nama'),
-        document.getElementById('filter-mesin-sn')
-      ]);
-    });
-    document.getElementById('filter-mesin-sn').addEventListener('change', () => {
-      filterTable('mesinTable', [
-        document.getElementById('filter-mesin-nama'),
-        document.getElementById('filter-mesin-sn')
-      ]);
+    // Mesin filters
+    const mesinFilters = [
+      document.getElementById('filter-mesin-nama'),
+      document.getElementById('filter-mesin-sn')
+    ];
+    mesinFilters.forEach(filter => {
+      filter.addEventListener('change', () => {
+        filterTable('mesinTable', mesinFilters);
+      });
     });
 
-    document.getElementById('filter-part-number').addEventListener('change', () => {
-      filterTable('partTable', [
-        document.getElementById('filter-part-number'),
-        document.getElementById('filter-part-nama'),
-        document.getElementById('filter-part-mesin'),
-        document.getElementById('filter-part-sn')
-      ]);
-    });
-    document.getElementById('filter-part-nama').addEventListener('change', () => {
-      filterTable('partTable', [
-        document.getElementById('filter-part-number'),
-        document.getElementById('filter-part-nama'),
-        document.getElementById('filter-part-mesin'),
-        document.getElementById('filter-part-sn')
-      ]);
-    });
-    document.getElementById('filter-part-mesin').addEventListener('change', () => {
-      filterTable('partTable', [
-        document.getElementById('filter-part-number'),
-        document.getElementById('filter-part-nama'),
-        document.getElementById('filter-part-mesin'),
-        document.getElementById('filter-part-sn')
-      ]);
-    });
-    document.getElementById('filter-part-sn').addEventListener('change', () => {
-      filterTable('partTable', [
-        document.getElementById('filter-part-number'),
-        document.getElementById('filter-part-nama'),
-        document.getElementById('filter-part-mesin'),
-        document.getElementById('filter-part-sn')
-      ]);
+    // Part filters
+    const partFilters = [
+      document.getElementById('filter-part-number'),
+      document.getElementById('filter-part-nama'),
+      document.getElementById('filter-part-mesin'),
+      document.getElementById('filter-part-sn')
+    ];
+    partFilters.forEach(filter => {
+      filter.addEventListener('change', () => {
+        filterTable('partTable', partFilters);
+      });
     });
   </script>
 </body>
