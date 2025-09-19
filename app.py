@@ -1,36 +1,7 @@
 import streamlit as st
 
-# ----------------- Konfigurasi Halaman -----------------
-st.set_page_config(
-    page_title="Monitoring Pengambilan Part",
-    page_icon="🛠️",
-    layout="wide"
-)
+st.set_page_config(page_title="Monitoring Pengambilan Part", page_icon="🛠️", layout="wide")
 
-# ----------------- Setup Session Auth -----------------
-if "authenticated" not in st.session_state:
-    st.session_state.authenticated = False
-
-# ----------------- Login Page -----------------
-if not st.session_state.authenticated:
-    st.title("🔑 Login Dashboard")
-    password = st.text_input("Password", type="password")
-
-    if st.button("Login"):
-        if password == "idsMED11!":   # ✅ hanya password
-            st.session_state.authenticated = True
-            st.rerun()
-        else:
-            st.error("❌ Password salah")
-
-# ----------------- Main Page -----------------
-else:
-    st.sidebar.markdown("## 🔓 Status: Terautentikasi")
-    if st.sidebar.button("Logout"):
-        st.session_state.authenticated = False
-        st.rerun()
-
-    # ----------------- HTML Dashboard -----------------
 html_code = """
 <!DOCTYPE html>
 <html lang="id">
@@ -324,7 +295,6 @@ html_code = """
   </script>
 </body>
 </html>
-    """
+"""
 
-    # Render HTML ke Streamlit
-    st.components.v1.html(html_code, height=2200, scrolling=True)
+st.components.v1.html(html_code, height=2200, scrolling=True)
