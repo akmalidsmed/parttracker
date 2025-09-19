@@ -1,3 +1,62 @@
+# Streamlit app: Monitoring Pengambilan Part
+# File: app.py
+# Jalankan: streamlit run app.py
+
+import streamlit as st
+import hashlib
+
+# --------- Konfigurasi halaman ----------
+st.set_page_config(page_title="Monitoring Pengambilan Part", page_icon="🛠️", layout="wide")
+
+# --------- Password (disimpan sebagai hash) ----------
+# Password plain: idsMED11!
+_PASSWORD_HASH = hashlib.sha256("idsMED11!".encode("utf-8")).hexdigest()
+
+def check_password(password: str) -> bool:
+    """True jika password cocok (SHA-256)."""
+    if not password:
+        return False
+    return hashlib.sha256(password.encode("utf-8")).hexdigest() == _PASSWORD_HASH
+
+# --------- Inisialisasi session state ----------
+if "authenticated" not in st.session_state:
+    st.session_state.authenticated = False
+if "login_error" not in st.session_state:
+    st.session_state.login_error = False
+
+# --------- Halaman login ----------
+if not st.session_state.authenticated:
+    st.markdown("# 🔐 Masuk untuk melihat aplikasi")
+    st.write("Masukkan password untuk membuka tampilan aplikasi monitoring.")
+
+    cols = st.columns([3, 1])
+    with cols[0]:
+        pwd = st.text_input("Password", type="password")
+    with cols[1]:
+        enter = st.button("Masuk")
+
+    if enter:
+        if check_password(pwd):
+            st.session_state.authenticated = True
+            st.session_state.login_error = False
+            st.rerun()
+        else:
+            st.session_state.login_error = True
+
+    if st.session_state.login_error:
+        st.error("Password salah — coba lagi.")
+
+    st.caption("Hubungi administrator jika Anda lupa password.")
+
+# --------- Konten utama jika login sukses ----------
+else:
+    st.sidebar.markdown("## 🔓 Status: Terautentikasi")
+    if st.sidebar.button("Logout"):
+        st.session_state.authenticated = False
+        st.rerun()
+
+    # HTML utama
+    html_code = """
 import streamlit as st
 
 st.set_page_config(page_title="Monitoring Pengambilan Part", page_icon="🛠️", layout="wide")
@@ -297,4 +356,6 @@ html_code = """
 </html>
 """
 
-st.components.v1.html(html_code, height=2200, scrolling=True)
+st.components.v1.html(html_code, height=2200, scrolling=True)    """  # ganti dengan HTML panjang kamu di atas
+
+    st.components.v1.html(html_code, height=2200, scrolling=True)
