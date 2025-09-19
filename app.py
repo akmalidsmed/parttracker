@@ -14,15 +14,14 @@ if "authenticated" not in st.session_state:
 # ----------------- Login Page -----------------
 if not st.session_state.authenticated:
     st.title("🔑 Login Dashboard")
-    username = st.text_input("Username")
     password = st.text_input("Password", type="password")
 
     if st.button("Login"):
-        if username == "admin" and password == "123":  # ganti sesuai kebutuhan
+        if password == "idsMED11!":   # ✅ hanya password
             st.session_state.authenticated = True
             st.rerun()
         else:
-            st.error("❌ Username atau password salah")
+            st.error("❌ Password salah")
 
 # ----------------- Main Page -----------------
 else:
