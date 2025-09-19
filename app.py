@@ -31,77 +31,299 @@ else:
         st.rerun()
 
     # ----------------- HTML Dashboard -----------------
-    html_code = """
-    <!DOCTYPE html>
-    <html lang="id">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>Monitoring Pengambilan Part dari Mesin</title>
-      <script src="https://cdn.tailwindcss.com"></script>
-      <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      />
-      <style>
-        body { font-family: Arial, sans-serif; background-color: #f9fafb; }
-        .header { background-color: #1e3a8a; color: white; padding: 20px; text-align: center; }
-        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); margin: 10px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 20px; }
-      </style>
-    </head>
-    <body>
-      <div class="header">
-        <h1 class="text-3xl font-bold">📊 Monitoring Pengambilan Part dari Mesin</h1>
-        <p>Dashboard pemantauan real-time</p>
+html_code = """
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Monitoring Pengambilan Part dari Mesin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --secondary: #10b981;
+      --accent: #f59e0b;
+      --warning: #ef4444;
+      --light: #f3f4f6;
+      --dark: #1f2937;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      min-width: 100vw;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 20px;
+      position: relative;
+    }
+
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .card-hover {
+      transition: all 0.3s ease;
+      transform: translateY(0);
+    }
+
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    details {
+      margin-bottom: 1rem;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: white;
+      margin-bottom: .5rem;
+    }
+
+    select, input[type="text"] {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: none;
+      margin-right: 10px;
+      color: #111;
+    }
+  </style>
+</head>
+<body>
+  <div class="w-full h-full">
+    <!-- Header -->
+    <div class="glass-effect p-6 mb-6 text-center">
+      <h1 class="text-3xl font-bold text-white mb-2">
+        Monitoring Pengambilan Part dari Mesin
+      </h1>
+      <p class="text-white/80">Sistem tracking pengambilan part mesin</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div class="card-hover bg-gradient-to-br from-blue-500 to-blue-600 p-6 rounded-xl text-white">
+        <div class="text-2xl font-bold mb-2" id="stat-mesin">1</div>
+        <div class="text-sm">Total Mesin</div>
       </div>
-
-      <div class="grid">
-        <div class="card">
-          <h2 class="text-xl font-semibold mb-2"><i class="fas fa-cogs"></i> Total Part</h2>
-          <p class="text-2xl font-bold text-blue-700">128</p>
-        </div>
-
-        <div class="card">
-          <h2 class="text-xl font-semibold mb-2"><i class="fas fa-check-circle"></i> Sudah Diambil</h2>
-          <p class="text-2xl font-bold text-green-600">85</p>
-        </div>
-
-        <div class="card">
-          <h2 class="text-xl font-semibold mb-2"><i class="fas fa-box"></i> Belum Diambil</h2>
-          <p class="text-2xl font-bold text-red-600">43</p>
-        </div>
+      <div class="card-hover bg-gradient-to-br from-green-500 to-green-600 p-6 rounded-xl text-white">
+        <div class="text-2xl font-bold mb-2" id="stat-part">3</div>
+        <div class="text-sm">Total Part Dicopot</div>
       </div>
+      <div class="card-hover bg-gradient-to-br from-yellow-500 to-yellow-600 p-6 rounded-xl text-white">
+        <div class="text-2xl font-bold mb-2" id="stat-monitor">2</div>
+        <div class="text-sm">Part Monitor (< 1 bulan)</div>
+      </div>
+      <div class="card-hover bg-gradient-to-br from-red-500 to-red-600 p-6 rounded-xl text-white">
+        <div class="text-2xl font-bold mb-2" id="stat-warning">1</div>
+        <div class="text-sm">Part Perhatian (>= 1 bulan)</div>
+      </div>
+    </div>
 
-      <div class="card" style="margin: 20px;">
-        <h2 class="text-xl font-semibold mb-2"><i class="fas fa-table"></i> Detail Pengambilan</h2>
-        <table class="min-w-full border border-gray-300">
-          <thead>
-            <tr class="bg-gray-100">
-              <th class="border px-4 py-2">No</th>
-              <th class="border px-4 py-2">Nama Part</th>
-              <th class="border px-4 py-2">Status</th>
-              <th class="border px-4 py-2">Tanggal</th>
+    <!-- Data Mesin -->
+    <div class="glass-effect p-6 mb-8">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-white">Data Mesin</h2>
+      </div>
+      <details>
+        <summary>Filter Mesin</summary>
+        <select id="filter-mesin-nama">
+          <option value="">Semua Nama Mesin</option>
+          <option value="Picoplus">Picoplus</option>
+        </select>
+        <select id="filter-mesin-sn">
+          <option value="">Semua Serial Number</option>
+          <option value="PC424M017">PC424M017</option>
+        </select>
+      </details>
+      <div class="overflow-x-auto">
+        <table class="w-full text-white" id="mesinTable">
+          <thead class="bg-white/10">
+            <tr>
+              <th class="px-4 py-3 text-left">Nama Mesin</th>
+              <th class="px-4 py-3 text-left">Serial Number</th>
+              <th class="px-4 py-3 text-left">Tanggal Input</th>
+              <th class="px-4 py-3 text-left">Jumlah Part</th>
+              <th class="px-4 py-3 text-left">Aksi</th>
+              <th class="px-4 py-3 text-left">Note</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="border px-4 py-2">1</td>
-              <td class="border px-4 py-2">Sensor Lutronic A1</td>
-              <td class="border px-4 py-2 text-green-600">✅ Diambil</td>
-              <td class="border px-4 py-2">2025-09-15</td>
-            </tr>
-            <tr>
-              <td class="border px-4 py-2">2</td>
-              <td class="border px-4 py-2">Module Laser B2</td>
-              <td class="border px-4 py-2 text-red-600">❌ Belum</td>
-              <td class="border px-4 py-2">-</td>
+            <tr class="border-b border-white/10 hover:bg-white/5">
+              <td class="px-4 py-3">Picoplus</td>
+              <td class="px-4 py-3">PC424M017</td>
+              <td class="px-4 py-3">31 Juli 2025</td>
+              <td class="px-4 py-3">3</td>
+              <td class="px-4 py-3">Belum dilengkapi</td>
+              <td class="px-4 py-3">Mesin Stock</td>
             </tr>
           </tbody>
         </table>
       </div>
-    </body>
-    </html>
+    </div>
+
+    <!-- Data Part Dicopot -->
+    <div class="glass-effect p-6 mb-8">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-white">Data Part Dicopot</h2>
+      </div>
+      <details>
+        <summary>Filter Part</summary>
+        <select id="filter-part-number">
+          <option value="">Semua Part Number</option>
+          <option value="-">-</option>
+        </select>
+        <select id="filter-part-nama">
+          <option value="">Semua Nama Part</option>
+          <option value="DYE ROD Picoplus">DYE ROD Picoplus</option>
+          <option value="Simmer Board">Simmer Board</option>
+          <option value="Temperature Sensor">Temperature Sensor</option>
+        </select>
+        <select id="filter-part-mesin">
+          <option value="">Semua Mesin</option>
+          <option value="Picoplus">Picoplus</option>
+        </select>
+        <select id="filter-part-sn">
+          <option value="">Semua SN</option>
+          <option value="PC424M017">PC424M017</option>
+        </select>
+      </details>
+      <div class="overflow-x-auto">
+        <table class="w-full text-white" id="partTable">
+          <thead class="bg-white/10">
+            <tr>
+              <th class="px-4 py-3 text-left">Part Number</th>
+              <th class="px-4 py-3 text-left">Nama Part</th>
+              <th class="px-4 py-3 text-left">Mesin</th>
+              <th class="px-4 py-3 text-left">SN</th>
+              <th class="px-4 py-3 text-left">Tanggal Dicopot</th>
+              <th class="px-4 py-3 text-left">Aging (hari)</th>
+              <th class="px-4 py-3 text-left">Tujuan</th>
+              <th class="px-4 py-3 text-left">Aksi</th>
+              <th class="px-4 py-3 text-left">Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-white/10 hover:bg-white/5">
+              <td class="px-4 py-3">-</td>
+              <td class="px-4 py-3">DYE ROD Picoplus</td>
+              <td class="px-4 py-3">Picoplus</td>
+              <td class="px-4 py-3">PC424M017</td>
+              <td class="px-4 py-3">31 Juli 2025</td>
+              <td class="px-4 py-3">35 hari</td>
+              <td class="px-4 py-3">Untuk Tosca Clinic Menteng</td>
+              <td class="px-4 py-3">Menunggu part pengganti</td>
+              <td class="px-4 py-3">Dikirim 1 Agustus 2025</td>
+            </tr>
+            <tr class="border-b border-white/10 hover:bg-white/5">
+              <td class="px-4 py-3">-</td>
+              <td class="px-4 py-3">Simmer Board</td>
+              <td class="px-4 py-3">Picoplus</td>
+              <td class="px-4 py-3">PC424M017</td>
+              <td class="px-4 py-3">6 Agustus 2025</td>
+              <td class="px-4 py-3">29 hari</td>
+              <td class="px-4 py-3">Untuk Tosca Clinic Menteng</td>
+              <td class="px-4 py-3">Menunggu part pengganti</td>
+              <td class="px-4 py-3">Dikirim 6 Agustus 2025</td>
+            </tr>
+            <tr class="border-b border-white/10 hover:bg-white/5">
+              <td class="px-4 py-3">-</td>
+              <td class="px-4 py-3">Temperature Sensor</td>
+              <td class="px-4 py-3">Picoplus</td>
+              <td class="px-4 py-3">PC424M017</td>
+              <td class="px-4 py-3">2 September 2025</td>
+              <td class="px-4 py-3">2 hari</td>
+              <td class="px-4 py-3">Untuk Votre Menteng</td>
+              <td class="px-4 py-3">Menunggu part pengganti</td>
+              <td class="px-4 py-3">Dikirim 2 September 2025, dicopot oleh rizki di logos</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function filterTable(tableId, filters) {
+      const table = document.getElementById(tableId);
+      const trs = table.getElementsByTagName('tr');
+      for (let i = 1; i < trs.length; i++) {
+        let show = true;
+        const tds = trs[i].getElementsByTagName('td');
+        filters.forEach((filter, index) => {
+          if (filter.value && !tds[index].innerText.includes(filter.value)) {
+            show = false;
+          }
+        });
+        trs[i].style.display = show ? '' : 'none';
+      }
+    }
+
+    document.getElementById('filter-mesin-nama').addEventListener('change', () => {
+      filterTable('mesinTable', [
+        document.getElementById('filter-mesin-nama'),
+        document.getElementById('filter-mesin-sn')
+      ]);
+    });
+    document.getElementById('filter-mesin-sn').addEventListener('change', () => {
+      filterTable('mesinTable', [
+        document.getElementById('filter-mesin-nama'),
+        document.getElementById('filter-mesin-sn')
+      ]);
+    });
+
+    document.getElementById('filter-part-number').addEventListener('change', () => {
+      filterTable('partTable', [
+        document.getElementById('filter-part-number'),
+        document.getElementById('filter-part-nama'),
+        document.getElementById('filter-part-mesin'),
+        document.getElementById('filter-part-sn')
+      ]);
+    });
+    document.getElementById('filter-part-nama').addEventListener('change', () => {
+      filterTable('partTable', [
+        document.getElementById('filter-part-number'),
+        document.getElementById('filter-part-nama'),
+        document.getElementById('filter-part-mesin'),
+        document.getElementById('filter-part-sn')
+      ]);
+    });
+    document.getElementById('filter-part-mesin').addEventListener('change', () => {
+      filterTable('partTable', [
+        document.getElementById('filter-part-number'),
+        document.getElementById('filter-part-nama'),
+        document.getElementById('filter-part-mesin'),
+        document.getElementById('filter-part-sn')
+      ]);
+    });
+    document.getElementById('filter-part-sn').addEventListener('change', () => {
+      filterTable('partTable', [
+        document.getElementById('filter-part-number'),
+        document.getElementById('filter-part-nama'),
+        document.getElementById('filter-part-mesin'),
+        document.getElementById('filter-part-sn')
+      ]);
+    });
+  </script>
+</body>
+</html>
     """
 
     # Render HTML ke Streamlit
